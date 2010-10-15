@@ -38,4 +38,17 @@ void RunProcess(LPCTSTR cmdline)
     CloseHandle(pi.hThread);
 }
 
+void BringEmacsToFront()
+{
+    HWND hwnd = FindWindow("Emacs", NULL);
+    //BringWindowToTop(hwnd);
+    if (hwnd != NULL) {
+        ShowWindow(hwnd, SW_RESTORE);
+        SetForegroundWindow(hwnd);
+    }
+    else {
+        RunProcess("D:\\Emacs\\bin\\runemacs.exe");
+    }
+}
+
 }

@@ -55,12 +55,13 @@ LRESULT CMainDlg::OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*
 	return 0;
 }
 
-LRESULT CMainDlg::OnClose(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
+LRESULT CMainDlg::OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 {
     RemoveIcon();
     UnRegHotKey();
 
 	bHandled = FALSE;
+    
     return 0;
 }
 
@@ -96,19 +97,26 @@ void CMainDlg::OnSysCommand(UINT wParam, CPoint point)
 
 void CMainDlg::RegHotKey()
 {
-    if (!::RegisterHotKey(m_hWnd, ID_HOTK_START_TC, MOD_WIN, '1'))
-        MessageBox(_T("Sorry, Register hotkey failed!"), _T("Error"), MB_ICONWARNING);
+    m_hotkTC.reg(m_hWnd, ID_HOTK_START_TC, MOD_WIN, '1');
+    m_hotkEmacs.reg(m_hWnd, ID_HOTK_START_EMACS, MOD_WIN, '2');
+
     return ;
 }
 
 void CMainDlg::UnRegHotKey()
 {
-    ::UnregisterHotKey(m_hWnd, ID_HOTK_START_TC);
+    m_hotkTC.unreg();
+    m_hotkEmacs.unreg();
 }
 
 void CMainDlg::OnHotKey(WPARAM id, WORD Vcode, WORD wModifiers)
 {
     if (ID_HOTK_START_TC == id) {
         util::RunProcess("d:\\totalcmd\\TOTALCMD.EXE /o");
+    }
+    else if (ID_HOTK_START_EMACS == id) {
+        //util::RunProcess("d:\\Emacs\bin\launch-emacs.exe");
+        util::BringEmacsToFront();
+        //ATLTRACE("Emacs");
     }
 }

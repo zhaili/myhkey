@@ -10,6 +10,7 @@
 #endif // _MSC_VER >= 1000
 
 #include "trayiconimpl.h"
+#include "util.h"
 
 class CMainDlg : public CDialogImpl<CMainDlg>, public CUpdateUI<CMainDlg>,
                  public CMessageFilter, public CIdleHandler, public CTrayIconImpl<CMainDlg>
@@ -17,7 +18,8 @@ class CMainDlg : public CDialogImpl<CMainDlg>, public CUpdateUI<CMainDlg>,
 public:
 	enum { IDD = IDD_MAINDLG };
 
-    enum { ID_HOTK_START_TC = 1001 };
+    enum { ID_HOTK_START_TC = 1001,
+           ID_HOTK_START_EMACS};
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual BOOL OnIdle();
@@ -27,7 +29,7 @@ public:
 
 	BEGIN_MSG_MAP_EX(CMainDlg)
 		MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
-		MESSAGE_HANDLER(WM_CLOSE, OnClose)
+		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
         MSG_WM_SYSCOMMAND(OnSysCommand)
         MSG_WM_HOTKEY(OnHotKey)
 		COMMAND_ID_HANDLER(ID_APP_ABOUT, OnAppAbout)
@@ -43,7 +45,7 @@ public:
 
 	LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
-    LRESULT OnClose(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+    LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 	LRESULT OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
     void OnSysCommand(UINT wParam, CPoint point);
@@ -53,6 +55,10 @@ public:
 	void CloseDialog(int nVal);
     void RegHotKey();
     void UnRegHotKey();
+
+private:
+    util::RegHotKey m_hotkTC;
+    util::RegHotKey m_hotkEmacs;
 };
 
 
