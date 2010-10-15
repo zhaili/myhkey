@@ -8,6 +8,8 @@
 #include "aboutdlg.h"
 #include "maindlg.h"
 
+#include "util.h"
+
 BOOL CMainDlg::PreTranslateMessage(MSG* pMsg)
 {
 	return CWindow::IsDialogMessage(pMsg);
@@ -39,6 +41,10 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 
 	UIAddChildWindowContainer(m_hWnd);
 
+    InstallIcon(_T("myhkey"), hIconSmall, NULL);
+
+    RegHotKey();
+
 	return TRUE;
 }
 
@@ -47,6 +53,15 @@ LRESULT CMainDlg::OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*
 	CAboutDlg dlg;
 	dlg.DoModal();
 	return 0;
+}
+
+LRESULT CMainDlg::OnClose(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
+{
+    RemoveIcon();
+    UnRegHotKey();
+
+	bHandled = FALSE;
+    return 0;
 }
 
 LRESULT CMainDlg::OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
@@ -66,4 +81,34 @@ void CMainDlg::CloseDialog(int nVal)
 {
 	DestroyWindow();
 	::PostQuitMessage(nVal);
+}
+
+void CMainDlg::OnSysCommand(UINT wParam, CPoint point)
+{
+	if (wParam == SC_MINIMIZE) {
+		ShowWindow(SW_MINIMIZE);
+		ShowWindow(SW_HIDE);
+	}
+	else {
+		SetMsgHandled(FALSE);
+	}
+}
+
+void CMainDlg::RegHotKey()
+{
+    if (!::RegisterHotKey(m_hWnd, ID_HOTK_START_TC, MOD_WIN, '1'))
+        MessageBox(_T("Sorry, Register hotkey failed!"), _T("Error"), MB_ICONWARNING);
+    return ;
+}
+
+void CMainDlg::UnRegHotKey()
+{
+    ::UnregisterHotKey(m_hWnd, ID_HOTK_START_TC);
+}
+
+void CMainDlg::OnHotKey(WPARAM id, WORD Vcode, WORD wModifiers)
+{
+    if (ID_HOTK_START_TC == id) {
+        util::RunProcess("d:\\totalcmd\\TOTALCMD.EXE /o");
+    }
 }

@@ -47,7 +47,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 	hRes = _Module.Init(NULL, hInstance);
 	ATLASSERT(SUCCEEDED(hRes));
 
-	int nRet = Run(lpstrCmdLine, nCmdShow);
+	int nRet = Run(lpstrCmdLine, SW_HIDE);
 
 	_Module.Term();
 	::CoUninitialize();
