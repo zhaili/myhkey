@@ -7,6 +7,9 @@
 
 namespace util {
 
+typedef void (WINAPI *PROCSWITCHTOTHISWINDOW) (HWND, BOOL);
+PROCSWITCHTOTHISWINDOW SwitchToThisWindow;
+
 void RunProcess(LPCTSTR cmdline)
 {
     TCHAR command[MAX_PATH] = {0};
@@ -38,13 +41,25 @@ void RunProcess(LPCTSTR cmdline)
     CloseHandle(pi.hThread);
 }
 
+
+void LoadApi()
+{
+    static bool loaded = FALSE;
+    if (!loaded) {
+        HMODULE hUser32 = GetModuleHandle("user32");
+        SwitchToThisWindow = (PROCSWITCHTOTHISWINDOW)
+            GetProcAddress(hUser32,"SwitchToThisWindow");
+		loaded = TRUE;
+    }
+}
+
 void BringEmacsToFront()
 {
     HWND hwnd = FindWindow("Emacs", NULL);
     //BringWindowToTop(hwnd);
     if (hwnd != NULL) {
-        ShowWindow(hwnd, SW_RESTORE);
-        SetForegroundWindow(hwnd);
+        LoadApi();
+        SwitchToThisWindow(hwnd, TRUE);
     }
     else {
         RunProcess("D:\\Emacs\\bin\\runemacs.exe");

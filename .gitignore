@@ -1,5 +1,6 @@
 Debug/
 Release/
+/lua/
 *.aps
 *.ncb
 *.opt
