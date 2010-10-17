@@ -5,9 +5,8 @@
 
 #include "util.h"
 
-namespace util {
+namespace Util {
 
-typedef void (WINAPI *PROCSWITCHTOTHISWINDOW) (HWND, BOOL);
 PROCSWITCHTOTHISWINDOW SwitchToThisWindow;
 
 void RunProcess(LPCTSTR cmdline)
@@ -53,17 +52,17 @@ void LoadApi()
     }
 }
 
-void BringEmacsToFront()
-{
-    HWND hwnd = FindWindow("Emacs", NULL);
-    //BringWindowToTop(hwnd);
-    if (hwnd != NULL) {
-        LoadApi();
-        SwitchToThisWindow(hwnd, TRUE);
-    }
-    else {
-        RunProcess("D:\\Emacs\\bin\\runemacs.exe");
-    }
-}
+ void BringEmacsToFront()
+ {
+     HWND hwnd = FindWindow("Emacs", NULL);
+     //BringWindowToTop(hwnd);
+     if (hwnd != NULL) {
+         LoadApi();
+         SwitchToThisWindow(hwnd, TRUE);
+     }
+     else {
+         RunProcess("D:\\Emacs\\bin\\runemacs.exe");
+     }
+ }
 
 }

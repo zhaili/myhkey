@@ -57,8 +57,8 @@ public:
     void UnRegHotKey();
 
 private:
-    util::RegHotKey m_hotkTC;
-    util::RegHotKey m_hotkEmacs;
+    Util::RegHotKey m_hotkTC;
+    Util::RegHotKey m_hotkEmacs;
 };
 
 

@@ -9,6 +9,8 @@
 #include "maindlg.h"
 
 #include "util.h"
+#include "script.h"
+#include "hotkeyevent.h"
 
 BOOL CMainDlg::PreTranslateMessage(MSG* pMsg)
 {
@@ -43,7 +45,9 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 
     InstallIcon(_T("myhkey"), hIconSmall, NULL);
 
-    RegHotKey();
+    //RegHotKey();
+    Script::LoadLuaEngine("keyset.lua");
+	HotkeyEvent::AssocHotkeyToWindow(m_hWnd);
 
 	return TRUE;
 }
@@ -58,7 +62,7 @@ LRESULT CMainDlg::OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*
 LRESULT CMainDlg::OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 {
     RemoveIcon();
-    UnRegHotKey();
+    //UnRegHotKey();
 
 	bHandled = FALSE;
     
@@ -111,12 +115,13 @@ void CMainDlg::UnRegHotKey()
 
 void CMainDlg::OnHotKey(WPARAM id, WORD Vcode, WORD wModifiers)
 {
-    if (ID_HOTK_START_TC == id) {
-        util::RunProcess("d:\\totalcmd\\TOTALCMD.EXE /o");
-    }
-    else if (ID_HOTK_START_EMACS == id) {
-        //util::RunProcess("d:\\Emacs\bin\launch-emacs.exe");
-        util::BringEmacsToFront();
-        //ATLTRACE("Emacs");
-    }
+    // if (ID_HOTK_START_TC == id) {
+    //     Util::RunProcess("d:\\totalcmd\\TOTALCMD.EXE /o");
+    // }
+    // else if (ID_HOTK_START_EMACS == id) {
+    //     //util::RunProcess("d:\\Emacs\bin\launch-emacs.exe");
+    //     Util::BringEmacsToFront();
+    //     //ATLTRACE("Emacs");
+    // }
+    HotkeyEvent::OnHotkeyEvent(id);
 }

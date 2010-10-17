@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "myhkey", "myhkey.vcxproj", "{F9E5F47E-7170-5AC0-86D9-7AA50416C74D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FF8D7F58-48B1-4BF6-996B-ECB869F443E2} = {FF8D7F58-48B1-4BF6-996B-ECB869F443E2}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua", "lua\lua.vcxproj", "{FF8D7F58-48B1-4BF6-996B-ECB869F443E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +18,10 @@ Global
 		{F9E5F47E-7170-5AC0-86D9-7AA50416C74D}.Debug|Win32.Build.0 = Debug|Win32
 		{F9E5F47E-7170-5AC0-86D9-7AA50416C74D}.Release|Win32.ActiveCfg = Release|Win32
 		{F9E5F47E-7170-5AC0-86D9-7AA50416C74D}.Release|Win32.Build.0 = Release|Win32
+		{FF8D7F58-48B1-4BF6-996B-ECB869F443E2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FF8D7F58-48B1-4BF6-996B-ECB869F443E2}.Debug|Win32.Build.0 = Debug|Win32
+		{FF8D7F58-48B1-4BF6-996B-ECB869F443E2}.Release|Win32.ActiveCfg = Release|Win32
+		{FF8D7F58-48B1-4BF6-996B-ECB869F443E2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
