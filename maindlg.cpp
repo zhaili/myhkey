@@ -45,8 +45,8 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 
     InstallIcon(_T("myhkey"), hIconSmall, NULL);
 
-    //RegHotKey();
-    Script::LoadLuaEngine("keyset.lua");
+    CString script = Util::GetAppDir() + "\\keyset.lua";
+    Script::LoadLuaEngine(script);
 	HotkeyEvent::AssocHotkeyToWindow(m_hWnd);
 
 	return TRUE;
@@ -99,29 +99,8 @@ void CMainDlg::OnSysCommand(UINT wParam, CPoint point)
 	}
 }
 
-void CMainDlg::RegHotKey()
-{
-    m_hotkTC.reg(m_hWnd, ID_HOTK_START_TC, MOD_WIN, '1');
-    m_hotkEmacs.reg(m_hWnd, ID_HOTK_START_EMACS, MOD_WIN, '2');
-
-    return ;
-}
-
-void CMainDlg::UnRegHotKey()
-{
-    m_hotkTC.unreg();
-    m_hotkEmacs.unreg();
-}
 
 void CMainDlg::OnHotKey(WPARAM id, WORD Vcode, WORD wModifiers)
 {
-    // if (ID_HOTK_START_TC == id) {
-    //     Util::RunProcess("d:\\totalcmd\\TOTALCMD.EXE /o");
-    // }
-    // else if (ID_HOTK_START_EMACS == id) {
-    //     //util::RunProcess("d:\\Emacs\bin\launch-emacs.exe");
-    //     Util::BringEmacsToFront();
-    //     //ATLTRACE("Emacs");
-    // }
     HotkeyEvent::OnHotkeyEvent(id);
 }

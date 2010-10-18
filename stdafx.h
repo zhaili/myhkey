@@ -12,6 +12,9 @@
 #define _WIN32_IE	0x0400
 #define _RICHEDIT_VER	0x0100
 
+#include <atlstr.h>
+#include <atltypes.h>
+
 #include <atlbase.h>
 #include <atlapp.h>
 
@@ -24,7 +27,7 @@ extern CAppModule _Module;
 #include <atldlgs.h>
 #include <atlctrlw.h>
 #include <atlcrack.h>
-#include <atlstr.h>
+
 
 #include <vector>
 

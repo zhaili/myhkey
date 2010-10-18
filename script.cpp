@@ -32,8 +32,8 @@ void CallLuaFunc(const char* func)
 
 void GetVKeyFromStr(const char* key, UINT &modifiers, UINT &vkey)
 {
-    CAtlString str(key);
-    CAtlString resToken;
+    CString str(key);
+    CString resToken;
     int curPos= 0;
 
     modifiers = 0;

@@ -53,12 +53,7 @@ public:
     void OnHotKey(WPARAM id, WORD Vcode, WORD wModifiers);
 
 	void CloseDialog(int nVal);
-    void RegHotKey();
-    void UnRegHotKey();
-
 private:
-    Util::RegHotKey m_hotkTC;
-    Util::RegHotKey m_hotkEmacs;
 };
 
 

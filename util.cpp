@@ -52,17 +52,29 @@ void LoadApi()
     }
 }
 
- void BringEmacsToFront()
- {
-     HWND hwnd = FindWindow("Emacs", NULL);
-     //BringWindowToTop(hwnd);
-     if (hwnd != NULL) {
-         LoadApi();
-         SwitchToThisWindow(hwnd, TRUE);
-     }
-     else {
-         RunProcess("D:\\Emacs\\bin\\runemacs.exe");
-     }
- }
+//
+// Returns the folder portion from a path
+//
+CString GetFolderOnly(LPCTSTR Path)
+{
+    // Strip off the file name so we can direct the file scanning dialog to
+    // go back to the same directory as before.
+    CString temp = (LPCTSTR) Path; // Force CString to make a copy
+    ::PathRemoveFileSpec(temp.GetBuffer(0));
+    temp.ReleaseBuffer(-1);
+    return temp;
+}
+
+CString GetAppDir()
+{
+    CString fullPath;
+	DWORD pathLen = ::GetModuleFileName(
+        _Module.GetModuleInstance(),
+        fullPath.GetBufferSetLength(MAX_PATH+1),
+        MAX_PATH);
+     // Note that ReleaseBuffer doesn't need a +1 for the null byte.
+    fullPath.ReleaseBuffer(pathLen);
+    return GetFolderOnly(fullPath);
+}
 
 }
