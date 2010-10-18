@@ -88,8 +88,7 @@ int lua_RunProcess(lua_State *L)
 int lua_ActivateWindow(lua_State *L)
 {
     HWND hwnd = (HWND)lua_tointeger(L, 1);
-    Util::LoadApi();
-    Util::SwitchToThisWindow(hwnd, TRUE);
+    SwitchToThisWindow(hwnd, TRUE);
 
     return 0;
 }

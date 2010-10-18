@@ -7,12 +7,10 @@
 
 namespace Util {
 
-PROCSWITCHTOTHISWINDOW SwitchToThisWindow;
-
 void RunProcess(LPCTSTR cmdline)
 {
     TCHAR command[MAX_PATH] = {0};
-    strcpy(command, cmdline);
+    _tcscpy_s(command, cmdline);
 
     STARTUPINFO si;
     PROCESS_INFORMATION pi;
@@ -38,18 +36,6 @@ void RunProcess(LPCTSTR cmdline)
 
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
-}
-
-
-void LoadApi()
-{
-    static bool loaded = FALSE;
-    if (!loaded) {
-        HMODULE hUser32 = GetModuleHandle("user32");
-        SwitchToThisWindow = (PROCSWITCHTOTHISWINDOW)
-            GetProcAddress(hUser32,"SwitchToThisWindow");
-		loaded = TRUE;
-    }
 }
 
 //

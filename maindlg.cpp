@@ -61,8 +61,9 @@ LRESULT CMainDlg::OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*
 
 LRESULT CMainDlg::OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 {
+    HotkeyEvent::DisassocHotkeyToWindow(m_hWnd);
+
     RemoveIcon();
-    //UnRegHotKey();
 
 	bHandled = FALSE;
     

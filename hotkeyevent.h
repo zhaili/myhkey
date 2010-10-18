@@ -12,6 +12,7 @@ struct HOTKEY_EVENT {
 void AddHotkeyEvent(UINT modifiers, UINT vk, const char* func);
 
 void AssocHotkeyToWindow(HWND hwnd);
+void DisassocHotkeyToWindow(HWND hwnd);
 
 void OnHotkeyEvent(int id);
 

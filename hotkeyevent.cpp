@@ -61,13 +61,6 @@ void CallHotkeyEvent(const HOTKEY_EVENT& e)
     Script::CallLuaFunc(e.func);
 }
 
-void OnHotkeyEvent(int id)
-{
-    HOTKEY_EVENT e;
-    GetHotkeyEventByID(id, e);
-    CallHotkeyEvent(e);
-}
-
 void AssocHotkeyToWindow(HWND hwnd)
 {
     std::vector<HOTKEY_EVENT>::const_iterator it = g_keylist.begin();
@@ -75,6 +68,22 @@ void AssocHotkeyToWindow(HWND hwnd)
     for (; it != g_keylist.end(); ++it) {
         RegHotkeyEvent(*it, hwnd);
     }
+}
+
+void DisassocHotkeyToWindow(HWND hwnd)
+{
+    std::vector<HOTKEY_EVENT>::const_iterator it = g_keylist.begin();
+
+    for (; it != g_keylist.end(); ++it) {
+        UnregHotkeyEvent(*it, hwnd);
+    }
+}
+
+void OnHotkeyEvent(int id)
+{
+    HOTKEY_EVENT e;
+    GetHotkeyEventByID(id, e);
+    CallHotkeyEvent(e);
 }
 
 }
