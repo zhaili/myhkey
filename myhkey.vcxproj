@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="aboutdlg.h" />
     <ClInclude Include="hotkeyevent.h" />
+    <ClInclude Include="limitsingleinstance.h" />
     <ClInclude Include="maindlg.h" />
     <ClInclude Include="myhkey.h" />
     <ClInclude Include="resource.h" />

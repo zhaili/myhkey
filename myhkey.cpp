@@ -8,6 +8,8 @@
 #include "aboutdlg.h"
 #include "maindlg.h"
 
+#include "limitsingleinstance.h"
+
 CAppModule _Module;
 
 int Run(LPTSTR /*lpstrCmdLine*/ = NULL, int nCmdShow = SW_SHOWDEFAULT)
@@ -39,6 +41,12 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 //	HRESULT hRes = ::CoInitializeEx(NULL, COINIT_MULTITHREADED);
 	ATLASSERT(SUCCEEDED(hRes));
 
+	CLimitSingleInstance limitinstance(_T("3732C286-F4C1-4CED-BDE6-96FC1EFA4345"));
+
+	if (limitinstance.IsAnotherInstanceRunning()) {
+		return 1;
+	}
+
 	// this resolves ATL window thunking problem when Microsoft Layer for Unicode (MSLU) is used
 	::DefWindowProc(NULL, 0, 0, 0L);
 
@@ -54,10 +62,3 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 
 	return nRet;
 }
-
-// int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lpstrCmdLine, int nCmdShow)
-// {
-//     Script::LoadLuaEngine("keyset.lua");
-
-//     return 0;
-// }

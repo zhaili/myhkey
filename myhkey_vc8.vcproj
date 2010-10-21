@@ -54,9 +54,6 @@
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
-				AssemblerListingLocation=".\Debug/"
-				ObjectFile=".\Debug/"
-				ProgramDataBaseFileName=".\Debug/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
@@ -75,11 +72,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile=".\Debug/myhkey.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug/myhkey.pdb"
 				SubSystem="2"
 				TargetMachine="1"
 			/>
@@ -357,6 +352,10 @@
 			</File>
 			<File
 				RelativePath=".\hotkeyevent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\limitsingleinstance.h"
 				>
 			</File>
 			<File
