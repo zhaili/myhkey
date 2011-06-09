@@ -6,10 +6,10 @@ struct HOTKEY_EVENT {
     UINT modifiers;
     UINT vk;
     int  id;
-    CString func;
+    int func_ref;
 };
 
-void AddHotkeyEvent(UINT modifiers, UINT vk, const char* func);
+void AddHotkeyEvent(UINT modifiers, UINT vk, int func_ref);
 
 void AssocHotkeyToWindow(HWND hwnd);
 void DisassocHotkeyToWindow(HWND hwnd);

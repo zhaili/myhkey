@@ -23,9 +23,9 @@ namespace Script {
 
 lua_State *g_L;
 
-void CallLuaFunc(const char* func)
+void CallLuaFunc(int r)
 {
-    lua_getglobal(g_L, func);
+    lua_rawgeti(g_L, LUA_REGISTRYINDEX, r);
     lua_pcall(g_L, 0, 1, 0);
 //	lua_tointeger(L, -1);
 }
@@ -70,9 +70,9 @@ int lua_RegHotkey(lua_State* L)
     UINT vkey      = 0;
     GetVKeyFromStr(key, modifiers, vkey);
     
-	const char* func = lua_tostring(L, 2);
+	int func_ref = luaL_ref(g_L, LUA_REGISTRYINDEX);
 
-    HotkeyEvent::AddHotkeyEvent(modifiers, vkey, func);
+    HotkeyEvent::AddHotkeyEvent(modifiers, vkey, func_ref);
 
     return 0;                   // no return values
 }

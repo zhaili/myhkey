@@ -17,13 +17,13 @@ int GetHotkeyGid()
     return (++gid);
 }
 
-void AddHotkeyEvent(UINT modifiers, UINT vk, const char* func)
+void AddHotkeyEvent(UINT modifiers, UINT vk, int func_ref)
 {
     HOTKEY_EVENT e;
     e.modifiers = modifiers;
     e.vk        = vk;
     e.id        = GetHotkeyGid();
-    e.func      = func;
+    e.func_ref  = func_ref;
 
     g_keylist.push_back(e);
 }
@@ -58,7 +58,7 @@ BOOL GetHotkeyEventByID(int id, HOTKEY_EVENT& e)
 
 void CallHotkeyEvent(const HOTKEY_EVENT& e)
 {
-    Script::CallLuaFunc(e.func);
+    Script::CallLuaFunc(e.func_ref);
 }
 
 void AssocHotkeyToWindow(HWND hwnd)
