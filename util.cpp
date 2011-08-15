@@ -3,6 +3,8 @@
 
 #include <string.h>
 
+#include <Userenv.h>
+
 #include "util.h"
 
 namespace Util {
@@ -56,11 +58,32 @@ CString GetAppDir()
     CString fullPath;
 	DWORD pathLen = ::GetModuleFileName(
         _Module.GetModuleInstance(),
-        fullPath.GetBufferSetLength(MAX_PATH+1),
+		fullPath.GetBufferSetLength(MAX_PATH),
         MAX_PATH);
-     // Note that ReleaseBuffer doesn't need a +1 for the null byte.
-    fullPath.ReleaseBuffer(pathLen);
+	// if pathLen == MAX_PATH then error occurred
+	if (pathLen == MAX_PATH)
+		fullPath.ReleaseBuffer(pathLen-1);
+	else
+        fullPath.ReleaseBuffer(pathLen);
+
     return GetFolderOnly(fullPath);
+}
+
+CString GetUserHomeDir()
+{
+    TCHAR fullPath[MAX_PATH];
+
+    HANDLE hToken = 0;
+    OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken);
+   
+	DWORD pathLen = MAX_PATH;
+    if (!GetUserProfileDirectory(hToken, fullPath, &pathLen)) {
+        fullPath[0] = 0;        // failed
+		pathLen = 1;
+    }
+
+    CloseHandle(hToken);
+    return CString(fullPath, pathLen-1);
 }
 
 typedef int (__stdcall *pfnRunFileDlg) (HWND hwndParent,
@@ -96,7 +119,9 @@ int RunFileDlg()
         rect.bottom = rect.top + DESKTOPBARBAR_HEIGHT;
 
         HWND dlgOwner = CreateWindow("STATIC", NULL, NULL, rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top, NULL, NULL, NULL, NULL);
-        int ret = runFileDlg(dlgOwner, LoadIcon(NULL, IDI_INFORMATION), NULL, NULL, NULL, NULL);
+		USES_CONVERSION;
+		CString homedir = GetUserHomeDir();
+		int ret = runFileDlg(dlgOwner, LoadIcon(NULL, IDI_INFORMATION), A2W(homedir), NULL, NULL, NULL);
         DestroyWindow(dlgOwner);
 
         return ret;

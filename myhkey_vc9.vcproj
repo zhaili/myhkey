@@ -73,6 +73,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="Userenv.lib"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
@@ -162,6 +163,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="Userenv.lib"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				SubSystem="2"
