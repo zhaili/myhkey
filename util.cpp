@@ -63,4 +63,34 @@ CString GetAppDir()
     return GetFolderOnly(fullPath);
 }
 
+typedef int (__stdcall *pfnRunFileDlg) (HWND hwndParent,
+                                        HICON hIcon,
+                                        LPWSTR lpszDestDirectory ,
+                                        LPWSTR lpszCaption,
+                                        LPWSTR lpszText,
+                                        DWORD dwFlags);
+
+HINSTANCE hShell32;               // Handle to DLL
+pfnRunFileDlg runFileDlg;
+
+int RunFileDlg()
+{
+    if (hShell32 == NULL) {
+        hShell32 = LoadLibrary("Shell32.dll");
+        if (hShell32 == NULL) return -1;
+    }
+    
+    runFileDlg = (pfnRunFileDlg)GetProcAddress(hShell32, (LPCSTR)61);
+    if (!runFileDlg)
+    {
+        FreeLibrary(hShell32);
+        return -1;
+    }
+    else
+    {
+        return runFileDlg(GetDesktopWindow(), LoadIcon(NULL, IDI_INFORMATION), NULL, NULL, NULL, NULL);
+    }
+}
+
+
 }

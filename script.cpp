@@ -106,6 +106,12 @@ int lua_FindWindow(lua_State *L)
     return 1;                   // return 1 value
 }
 
+int lua_RunFileDlg(lua_State *L)
+{
+	Util::RunFileDlg();
+    return 0;                   // no return value
+}
+
 void LoadLuaEngine(const char* filename)
 {
     g_L = luaL_newstate();
@@ -116,6 +122,7 @@ void LoadLuaEngine(const char* filename)
     LUA_REG_FUNC(RunProcess)
     LUA_REG_FUNC(ActivateWindow)
     LUA_REG_FUNC(FindWindow)
+	LUA_REG_FUNC(RunFileDlg)
 
     luaL_loadfile(g_L, filename);
     lua_pcall(g_L, 0, 0, 0);

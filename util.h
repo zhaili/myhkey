@@ -8,4 +8,6 @@ void RunProcess(LPCTSTR cmdline);
 
 CString GetAppDir();
 
+int RunFileDlg();
+
 }
