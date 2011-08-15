@@ -73,6 +73,8 @@ typedef int (__stdcall *pfnRunFileDlg) (HWND hwndParent,
 HINSTANCE hShell32;               // Handle to DLL
 pfnRunFileDlg runFileDlg;
 
+#define 	DESKTOPBARBAR_HEIGHT   (GetSystemMetrics(SM_CYSIZE) + 5 * GetSystemMetrics(SM_CYEDGE))
+
 int RunFileDlg()
 {
     if (hShell32 == NULL) {
@@ -88,7 +90,16 @@ int RunFileDlg()
     }
     else
     {
-        return runFileDlg(GetDesktopWindow(), LoadIcon(NULL, IDI_INFORMATION), NULL, NULL, NULL, NULL);
+        RECT rect = {0};
+		rect.top = GetSystemMetrics(SM_CYSCREEN) - DESKTOPBARBAR_HEIGHT;
+        rect.right = GetSystemMetrics(SM_CXSCREEN);
+        rect.bottom = rect.top + DESKTOPBARBAR_HEIGHT;
+
+        HWND dlgOwner = CreateWindow("STATIC", NULL, NULL, rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top, NULL, NULL, NULL, NULL);
+        int ret = runFileDlg(dlgOwner, LoadIcon(NULL, IDI_INFORMATION), NULL, NULL, NULL, NULL);
+        DestroyWindow(dlgOwner);
+
+        return ret;
     }
 }
 
