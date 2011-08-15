@@ -106,6 +106,19 @@ int lua_FindWindow(lua_State *L)
     return 1;                   // return 1 value
 }
 
+int lua_PostMessage(lua_State *L)
+{
+    HWND hwnd = (HWND)lua_tointeger(L, 1);
+    UINT msg  = (UINT)lua_tointeger(L, 2);
+    WPARAM wparam = (WPARAM)lua_tointeger(L, 3);
+    LPARAM lparam = (LPARAM)lua_tointeger(L, 4);
+
+    BOOL ret = PostMessage(hwnd, msg, wparam, lparam);
+    lua_pushboolean(L, ret);
+    
+    return 1;                   // return 1 value
+}
+
 int lua_RunFileDlg(lua_State *L)
 {
 	Util::RunFileDlg();
@@ -123,6 +136,7 @@ void LoadLuaEngine(const char* filename)
     LUA_REG_FUNC(ActivateWindow)
     LUA_REG_FUNC(FindWindow)
 	LUA_REG_FUNC(RunFileDlg)
+	LUA_REG_FUNC(PostMessage)
 
     luaL_loadfile(g_L, filename);
     lua_pcall(g_L, 0, 0, 0);
