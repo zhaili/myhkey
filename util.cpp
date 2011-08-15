@@ -86,6 +86,28 @@ CString GetUserHomeDir()
     return CString(fullPath, pathLen-1);
 }
 
+void ToggleDesktop()
+{
+    // Create an instance of the shell class
+    IShellDispatch4 *pShellDisp = NULL;
+    HRESULT sc = CoCreateInstance(CLSID_Shell, NULL, CLSCTX_SERVER, IID_IDispatch, (LPVOID *) &pShellDisp);
+    if (SUCCEEDED(sc)) {
+        pShellDisp->ToggleDesktop();
+        pShellDisp->Release();
+    }
+}
+
+void MinimizeAll()
+{
+    // Create an instance of the shell class
+    IShellDispatch4 *pShellDisp = NULL;
+    HRESULT sc = CoCreateInstance(CLSID_Shell, NULL, CLSCTX_SERVER, IID_IDispatch, (LPVOID *) &pShellDisp);
+    if (SUCCEEDED(sc)) {
+        pShellDisp->MinimizeAll();
+        pShellDisp->Release();
+    }
+}
+
 typedef int (__stdcall *pfnRunFileDlg) (HWND hwndParent,
                                         HICON hIcon,
                                         LPWSTR lpszDestDirectory ,

@@ -93,6 +93,20 @@ int lua_ActivateWindow(lua_State *L)
     return 0;
 }
 
+int lua_ToggleDesktop(lua_State *L)
+{
+	Util::ToggleDesktop();
+
+    return 0;
+}
+
+int lua_MinimizeAll(lua_State *L)
+{
+	Util::MinimizeAll();
+
+    return 0;
+}
+
 int lua_FindWindow(lua_State *L)
 {
     const char* title = lua_tostring(L, 1);
@@ -134,6 +148,8 @@ void LoadLuaEngine(const char* filename)
     LUA_REG_FUNC(RegHotkey)
     LUA_REG_FUNC(RunProcess)
     LUA_REG_FUNC(ActivateWindow)
+    LUA_REG_FUNC(ToggleDesktop)
+	LUA_REG_FUNC(MinimizeAll)
     LUA_REG_FUNC(FindWindow)
 	LUA_REG_FUNC(RunFileDlg)
 	LUA_REG_FUNC(PostMessage)

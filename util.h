@@ -9,5 +9,7 @@ void RunProcess(LPCTSTR cmdline);
 CString GetAppDir();
 
 int RunFileDlg();
+void ToggleDesktop();
+void MinimizeAll();
 
 }
