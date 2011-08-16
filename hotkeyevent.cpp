@@ -77,6 +77,7 @@ void DisassocHotkeyToWindow(HWND hwnd)
     for (; it != g_keylist.end(); ++it) {
         UnregHotkeyEvent(*it, hwnd);
     }
+	g_keylist.clear();
 }
 
 void OnHotkeyEvent(int id)

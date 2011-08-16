@@ -35,6 +35,7 @@ public:
 		COMMAND_ID_HANDLER(ID_APP_ABOUT, OnAppAbout)
 		COMMAND_ID_HANDLER(IDOK, OnOK)
 		COMMAND_ID_HANDLER(IDCANCEL, OnCancel)
+		COMMAND_ID_HANDLER(IDC_BTN_RELOAD, OnReloadScript)
         CHAIN_MSG_MAP(CTrayIconImpl<CMainDlg>)
 	END_MSG_MAP()
 
@@ -48,7 +49,11 @@ public:
     LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 	LRESULT OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+	LRESULT OnReloadScript(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
     void OnSysCommand(UINT wParam, CPoint point);
+
+    void LuaInit();
+    void LuaFree();
 
     void OnHotKey(WPARAM id, WORD Vcode, WORD wModifiers);
 

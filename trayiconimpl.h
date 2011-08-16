@@ -48,7 +48,7 @@ public:
         m_nid.hIcon = hIcon;
         m_nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
         m_nid.uCallbackMessage = WM_TRAYICON;
-        _tcscpy(m_nid.szTip, lpszToolTip);
+        _tcscpy_s(m_nid.szTip, lpszToolTip);
         // Install
         m_bInstalled = Shell_NotifyIcon(NIM_ADD, &m_nid) ? true : false;
         // Done

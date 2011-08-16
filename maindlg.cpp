@@ -45,11 +45,22 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 
     InstallIcon(_T("myhkey"), hIconSmall, NULL);
 
+    LuaInit();
+
+	return TRUE;
+}
+
+void CMainDlg::LuaInit()
+{
     CString script = Util::GetAppDir() + "\\keyset.lua";
     Script::LoadLuaEngine(script);
 	HotkeyEvent::AssocHotkeyToWindow(m_hWnd);
+}
 
-	return TRUE;
+void CMainDlg::LuaFree()
+{
+    HotkeyEvent::DisassocHotkeyToWindow(m_hWnd);
+	Script::UnloadLuaEngine();
 }
 
 LRESULT CMainDlg::OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
@@ -61,12 +72,10 @@ LRESULT CMainDlg::OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*
 
 LRESULT CMainDlg::OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 {
-    HotkeyEvent::DisassocHotkeyToWindow(m_hWnd);
-
+    LuaFree();
     RemoveIcon();
 
 	bHandled = FALSE;
-    
     return 0;
 }
 
@@ -80,6 +89,13 @@ LRESULT CMainDlg::OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /
 LRESULT CMainDlg::OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
 	CloseDialog(wID);
+	return 0;
+}
+
+LRESULT CMainDlg::OnReloadScript(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+{
+    LuaFree();
+    LuaInit();
 	return 0;
 }
 
