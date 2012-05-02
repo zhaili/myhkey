@@ -85,12 +85,26 @@ int lua_RunProcess(lua_State *L)
     return 0;
 }
 
-int lua_ActivateWindow(lua_State *L)
+int lua_SwitchToThisWindow(lua_State *L)
 {
     HWND hwnd = (HWND)lua_tointeger(L, 1);
     SwitchToThisWindow(hwnd, TRUE);
 
     return 0;
+}
+
+int lua_ActivateWindow(lua_State *L)
+{
+	HWND hwnd = (HWND)lua_tointeger(L, 1);
+
+	ShowWindow(hwnd,SW_SHOW);
+	if (IsIconic(hwnd))
+		ShowWindow(hwnd, SW_RESTORE);
+	else
+		BringWindowToTop(hwnd);
+	SetForegroundWindow(hwnd);
+
+	return 0;
 }
 
 int lua_ToggleDesktop(lua_State *L)
@@ -147,6 +161,7 @@ void LoadLuaEngine(const char* filename)
 
     LUA_REG_FUNC(RegHotkey)
     LUA_REG_FUNC(RunProcess)
+	LUA_REG_FUNC(SwitchToThisWindow)
     LUA_REG_FUNC(ActivateWindow)
     LUA_REG_FUNC(ToggleDesktop)
 	LUA_REG_FUNC(MinimizeAll)
