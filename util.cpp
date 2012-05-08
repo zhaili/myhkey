@@ -150,5 +150,23 @@ int RunFileDlg()
     }
 }
 
+// FindMenuItem() will find a menu item string from the specified
+// popup menu and returns its position (0-based) in the specified 
+// popup menu. It returns -1 if no such menu item string is found.
+int FindMenuItem(CMenuHandle menu, LPCTSTR menuString)
+{
+   ATLASSERT(menu.IsMenu());
+
+   int count = menu.GetMenuItemCount();
+   for (int i = 0; i < count; i++)
+   {
+      CString str;
+	  if (menu.GetMenuString(i, str, MF_BYPOSITION) &&
+		  str.Compare(menuString) == 0)
+         return i;
+   }
+
+   return -1;
+}
 
 }

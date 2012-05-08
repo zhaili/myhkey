@@ -51,6 +51,12 @@ public:
         _tcscpy_s(m_nid.szTip, lpszToolTip);
         // Install
         m_bInstalled = Shell_NotifyIcon(NIM_ADD, &m_nid) ? true : false;
+        // Insert sysmenu
+        HMENU hm = GetSystemMenu(pT->m_hWnd, FALSE);
+        CMenuHandle menu(hm);
+        int menuPos = Util::FindMenuItem(menu, _T("Reload Script"));
+        if (menuPos == -1)
+            menu.InsertMenu(0, MF_BYPOSITION | MF_STRING, IDC_BTN_RELOAD, _T("Reload Script"));
         // Done
         return m_bInstalled;
     }

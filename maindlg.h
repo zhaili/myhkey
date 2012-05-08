@@ -9,8 +9,8 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
-#include "trayiconimpl.h"
 #include "util.h"
+#include "trayiconimpl.h"
 
 class CMainDlg : public CDialogImpl<CMainDlg>, public CUpdateUI<CMainDlg>,
                  public CMessageFilter, public CIdleHandler, public CTrayIconImpl<CMainDlg>

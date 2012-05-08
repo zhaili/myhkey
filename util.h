@@ -12,4 +12,6 @@ int RunFileDlg();
 void ToggleDesktop();
 void MinimizeAll();
 
+int FindMenuItem(CMenuHandle menu, LPCTSTR menuString);
+
 }

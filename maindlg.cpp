@@ -107,12 +107,17 @@ void CMainDlg::CloseDialog(int nVal)
 
 void CMainDlg::OnSysCommand(UINT wParam, CPoint point)
 {
-	if (wParam == SC_MINIMIZE) {
-		ShowWindow(SW_MINIMIZE);
-		ShowWindow(SW_HIDE);
-	}
-	else {
-		SetMsgHandled(FALSE);
+	switch (wParam) {
+		case SC_MINIMIZE:
+			ShowWindow(SW_MINIMIZE);
+			ShowWindow(SW_HIDE);
+			break;
+		case IDC_BTN_RELOAD:
+			LuaFree();  // OnReloadScript
+			LuaInit();
+			break;
+		default:
+			SetMsgHandled(FALSE);
 	}
 }
 

@@ -5,7 +5,6 @@
 #define IDD_ABOUTBOX                    100
 #define IDR_MAINFRAME                   128
 #define IDD_MAINDLG                     129
-#define IDC_BUTTON1                     1000
 #define IDC_BTN_RELOAD                  1000
 
 // Next default values for new objects
