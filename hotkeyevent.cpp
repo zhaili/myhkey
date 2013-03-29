@@ -33,6 +33,9 @@ void RegHotkeyEvent(const HOTKEY_EVENT &e, HWND hwnd)
     if (::RegisterHotKey(hwnd, e.id, e.modifiers, e.vk)) {
         ATLTRACE(_T("Register Hotkey %d succeed!\n"), e.id);
     }
+	else {
+		MessageBox(NULL, _T("Regisiter Hotkey failed!"), _T("Sorry"), MB_OK);
+	}
 }
 
 void UnregHotkeyEvent(const HOTKEY_EVENT &e, HWND hwnd)

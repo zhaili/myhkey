@@ -2,7 +2,7 @@
 
 namespace Script {
 
-void LoadLuaEngine(const char* filename);
+int LoadLuaEngine(const char* filename);
 void UnloadLuaEngine();
 
 void CallLuaFunc(int r);

@@ -153,8 +153,10 @@ int lua_RunFileDlg(lua_State *L)
     return 0;                   // no return value
 }
 
-void LoadLuaEngine(const char* filename)
+int LoadLuaEngine(const char* filename)
 {
+	int err;
+
     g_L = luaL_newstate();
 
     luaL_openlibs(g_L);
@@ -169,11 +171,10 @@ void LoadLuaEngine(const char* filename)
 	LUA_REG_FUNC(RunFileDlg)
 	LUA_REG_FUNC(PostMessage)
 
-    luaL_loadfile(g_L, filename);
-    lua_pcall(g_L, 0, 0, 0);
+    err = luaL_loadfile(g_L, filename);
+    if (!err) lua_pcall(g_L, 0, 0, 0);
 
-    // lua_getglobal(g_L, "a");
-    // ATLTRACE("%d\n", lua_tointeger(g_L, -1));
+	return err;
 }
 
 void UnloadLuaEngine()

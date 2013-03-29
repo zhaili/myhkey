@@ -53,7 +53,9 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 void CMainDlg::LuaInit()
 {
     CString script = Util::GetAppDir() + "\\keyset.lua";
-    Script::LoadLuaEngine(script);
+	if (Script::LoadLuaEngine(script)) {
+		MessageBox("Load Script Failed!","Sorry", MB_OK);
+	}
 	HotkeyEvent::AssocHotkeyToWindow(m_hWnd);
 }
 
